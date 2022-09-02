@@ -38,7 +38,7 @@ where $\mathbf{K_{y}} = \mathbf{K} + \sigma_y^2\mathbf{I}$.
 Finally, to include noise $\boldsymbol{\epsilon}$ into predictions $\mathbf{y}^{\*}$, we need to add $\sigma_{y}^2$ to the diagonal of the covariance matrix $\boldsymbol{\Sigma}^{\*}$:
 
 ```math
-\begin{align} \label{eq:eq5} p(\mathbf{f}^{\*}|\mathbf{X}^{\*}, \mathbf{X}, \mathbf{y}) \sim \mathcal{N}(\mathbf{y}^{\*}|\boldsymbol{\mu}^{\*}, \boldsymbol{\Sigma}^{\*} + \sigma_y^2 \mathbf{I}) \end{align}
+\begin{align} \label{eq:eq5} p(\mathbf{f}^{*}|\mathbf{X}^{*}, \mathbf{X}, \mathbf{y}) \sim \mathcal{N}(\mathbf{y}^{*}|\boldsymbol{\mu}^{*}, \boldsymbol{\Sigma}^{*} + \sigma_y^2 \mathbf{I}) \end{align}
 ```
 
 # Python Implementation and Example
@@ -49,10 +49,7 @@ We saw in the previous section that the kernel function $k(\cdot)$ plays a key r
 
 To illustrate how kernels work in GPR, we will look at a simple toy dataset curated "on purpose". Figure \ref{fig:signal} shows the true distribution $f(\mathbf{x})$ and the observations collected. The goal is to build a model to find the real signal based on the data observed, but the challenge is that real-world observations will always come with noise that perturb the underlying patterns. Thus, selecting the proper kernels and tuning the hyperparameters of the kernels is critical in ensuring the model is neither _overfitted_ nor _underfitted._
 
-
-```{r signal, fig.align='center', fig.cap="Example dataset. The blue line represents the true signal (i.e., $f$), the orange dots represent the observations (i.e., $f+\\epsilon$).", fig.pos="H"}
-knitr::include_graphics("signal.png")
-```
+![Example dataset. The blue line represents the true signal (i.e., $f$), the orange dots represent the observations (i.e., $f+\\epsilon$)](signal.png)
 
 
 ## Kernel Selection

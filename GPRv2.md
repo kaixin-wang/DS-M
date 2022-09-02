@@ -58,8 +58,10 @@ knitr::include_graphics("signal.png")
 Example dataset.
 
 <p>
+    <center>
     <img src="/signal.png" alt>
     <em>Example Dataset.</em>
+        </center/>
 </p>
 
 ## Kernel Selection

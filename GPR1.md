@@ -9,28 +9,37 @@ GPR is a non-parametric Bayesian approach for inference. Instead of inferring a 
 
 A Gaussian process is a random process where any point $\mathbf{x}\in \mathbb{R}^d$ is assigned a random variable $f(\mathbf{x})$ and where the joint distribution of a finite number of these variables $p(f(x_1,..., f(x_N))$ follows a Gaussian distribution:
 
-\begin{align} p(\mathbf{f}|\mathbf{X})\sim \mathcal{N}(\mathbf{f}|\boldsymbol \mu,\mathbf{K}) \label{eq1}\tag{1} \end{align}
+```math
+p(\mathbf{f}|\mathbf{X})\sim \mathcal{N}(\mathbf{f}|\boldsymbol \mu,\mathbf{K}) 
+```
 
-In Equation \ref{eq:eq1}, $\mathbf{f}=(f(x_1),...,f(x_N)), \boldsymbol \mu=(m(x_1),...,m(x_N))$ and $\mathbf{K}_{ij}=k(x_i,x_j)$. $m$ is the *mean* function; people typically use $m(\mathbf{x})=0$ as GPs are flexible enough to model the mean even if it's set to an arbitrary value at the beginning. $k$ is a positive definite function referred to as the *kernel* function or *covariance* function. Therefore, a Gaussian process is a distribution that is defined by $\mathbf{K}$, the covariance matrix. If points $x_i$ and $x_j$ are considered to be similar in the kernel space, the function values at these points, i.e., $f(x_i)$ and $f(x_j)$, will be of similar value likewise.
+In Equation (@eq:eq1), $\mathbf{f}=(f(x_1),...,f(x_N)), \boldsymbol \mu=(m(x_1),...,m(x_N))$ and $\mathbf{K}_{ij}=k(x_i,x_j)$. $m$ is the *mean* function; people typically use $m(\mathbf{x})=0$ as GPs are flexible enough to model the mean even if it's set to an arbitrary value at the beginning. $k$ is a positive definite function referred to as the *kernel* function or *covariance* function. Therefore, a Gaussian process is a distribution that is defined by $\mathbf{K}$, the covariance matrix. If points $x_i$ and $x_j$ are considered to be similar in the kernel space, the function values at these points, i.e., $f(x_i)$ and $f(x_j)$, will be of similar value likewise.
 
-Suppose we are given the values of the noise-free function $\mathbf{f}$ at some inputs $\mathbf{X}$, a GP prior can be converted into a GP posterior $p(\mathbf{f}^{*}|\mathbf{X}^{*}, \mathbf{X}, \mathbf{f})$, which can be used to make predictions $\mathbf{f}^{*}$ at new inputs $\mathbf{X}^{*}$. By definition of a GP, the joint distribution of observed values $f$ and predictions $\mathbf{f}^{*}$ is Gaussian and can be partitioned into the following: 
+Suppose we are given the values of the noise-free function $\mathbf{f}$ at some inputs $\mathbf{X}$, a GP prior can be converted into a GP posterior $p(\mathbf{f}^{\*}|\mathbf{X}^{\*}, \mathbf{X}, \mathbf{f})$, which can be used to make predictions $\mathbf{f}^{\*}$ at new inputs $\mathbf{X}^{\*}$. By definition of a GP, the joint distribution of observed values $f$ and predictions $\mathbf{f}^{\*}$ is Gaussian and can be partitioned into the following: 
 
-\begin{align} \label{eq:eq2} \begin{pmatrix} \mathbf{f} \\ \mathbf{f}^{*} \end{pmatrix} \sim \mathcal{N}\left(\mathbf{0}, \begin{pmatrix} \mathbf{K} & \mathbf{K}^{*} \\ \mathbf{K^*}^{T} & \mathbf{K}^{**} \end{pmatrix}\right) \end{align}
+```math
+\begin{pmatrix} \mathbf{f} \\ \mathbf{f}^{*} \end{pmatrix} \sim \mathcal{N}\left(\mathbf{0}, \begin{pmatrix} \mathbf{K} & \mathbf{K}^{*} \\ \mathbf{K^*}^{T} & \mathbf{K}^{**} \end{pmatrix}\right)
+```
 
-in which $\mathbf{K^*} = k(\mathbf{X}, \mathbf{X}^*)$ and $\mathbf{K}^{**} = k(\mathbf{X}^*, \mathbf{X}^*)$. With $m$ training data points and $n$ new observations (i.e., test data points), $\mathbf{K}$ is a $m\times m$ matrix, $\mathbf{K}^*$ is a $m\times n$ matrix, and $\mathbf{K}^{**}$ is a $n\times n$ matrix. Based on properties of Gaussian distributions, the predictive distribution (i.e., posterior) is given by
+in which $\mathbf{K^\*} = k(\mathbf{X}, \mathbf{X}^\*)$ and $\mathbf{K}^{\*\*} = k(\mathbf{X}^\*, \mathbf{X}^\*)$. With $m$ training data points and $n$ new observations (i.e., test data points), $\mathbf{K}$ is a $m\times m$ matrix, $\mathbf{K}^\*$ is a $m\times n$ matrix, and $\mathbf{K}^{\*\*}$ is a $n\times n$ matrix. Based on properties of Gaussian distributions, the predictive distribution (i.e., posterior) is given by
 
-\begin{align} \label{eq:eq3} p(\mathbf{f^{*}}|\mathbf{X}^{*}, \mathbf{X}, \mathbf{f}) & \sim \mathcal{N}(\mathbf{f}^{*}|\boldsymbol{\mu}^{*}, \boldsymbol\Sigma^{*}) \\ \text{where } \boldsymbol{\mu}^{*} & = \mathbf{K}^{*T}\mathbf{K}^{-1}\mathbf{f} \\ \boldsymbol{\Sigma^{*}} & = \mathbf{K}^{**} - \mathbf{K}^{*T}\mathbf{K}^{-1}\mathbf{K}^{*} \end{align}
+```math
+\begin{align} p(\mathbf{f^{*}}|\mathbf{X}^{*}, \mathbf{X}, \mathbf{f}) & \sim \mathcal{N}(\mathbf{f}^{*}|\boldsymbol{\mu}^{*}, \boldsymbol\Sigma^{*}) \\ \text{where } \boldsymbol{\mu}^{*} & = \mathbf{K}^{*T}\mathbf{K}^{-1}\mathbf{f} \\ \boldsymbol{\Sigma^{*}} & = \mathbf{K}^{**} - \mathbf{K}^{*T}\mathbf{K}^{-1}\mathbf{K}^{*} \end{align}
+```
 
 Now suppose we have the objective function with noise, $\mathbf{y}=\mathbf{f}+\boldsymbol\sigma$, where noise $\boldsymbol\sigma \sim \mathcal{N}(\mathbf{0}, \sigma_{y}^2\mathbf{I})$ is independently and identically distributed (i.i.d.). The posterior can then be represented as 
 
-\begin{align} \label{eq:eq4} p(\mathbf{f}^{*}|\mathbf{X}^{*}, \mathbf{X},  \mathbf{y}) & \sim \mathcal{N}(\mathbf{y}^{*}|\boldsymbol{\mu}^{*}, \boldsymbol{\Sigma}^{*}) \\ \text{where } \boldsymbol{\mu}^{*} & = \mathbf{K}^{*T}\mathbf{K}^{-1}_{y}\mathbf{y} \\ \boldsymbol{\Sigma}^{*} & = \mathbf{K}^{**} - \mathbf{K}^{*T}\mathbf{K}^{-1}_{y}\mathbf{K}^{*} \end{align}
+```math
+\begin{align} p(\mathbf{f}^{*}|\mathbf{X}^{*}, \mathbf{X},  \mathbf{y}) & \sim \mathcal{N}(\mathbf{y}^{*}|\boldsymbol{\mu}^{*}, \boldsymbol{\Sigma}^{*}) \\ \text{where } \boldsymbol{\mu}^{*} & = \mathbf{K}^{*T}\mathbf{K}^{-1}_{y}\mathbf{y} \\ \boldsymbol{\Sigma}^{*} & = \mathbf{K}^{**} - \mathbf{K}^{*T}\mathbf{K}^{-1}_{y}\mathbf{K}^{*} \end{align}
+```
 
 where $\mathbf{K_{y}} = \mathbf{K} + \sigma_y^2\mathbf{I}$.
 
-Finally, to include noise $\boldsymbol{\epsilon}$ into predictions $\mathbf{y}^{*}$, we need to add $\sigma_{y}^2$ to the diagonal of the covariance matrix $\boldsymbol{\Sigma}^{*}$:
+Finally, to include noise $\boldsymbol{\epsilon}$ into predictions $\mathbf{y}^{\*}$, we need to add $\sigma_{y}^2$ to the diagonal of the covariance matrix $\boldsymbol{\Sigma}^{\*}$:
 
-\begin{align} \label{eq:eq5} p(\mathbf{f}^{*}|\mathbf{X}^{*}, \mathbf{X}, \mathbf{y}) \sim \mathcal{N}(\mathbf{y}^{*}|\boldsymbol{\mu}^{*}, \boldsymbol{\Sigma}^{*} + \sigma_y^2 \mathbf{I}) \end{align}
-
+```math
+\begin{align} \label{eq:eq5} p(\mathbf{f}^{\*}|\mathbf{X}^{\*}, \mathbf{X}, \mathbf{y}) \sim \mathcal{N}(\mathbf{y}^{\*}|\boldsymbol{\mu}^{\*}, \boldsymbol{\Sigma}^{\*} + \sigma_y^2 \mathbf{I}) \end{align}
+```
 
 # Python Implementation and Example
 
@@ -52,13 +61,17 @@ There is an infinite number of kernels that we can choose when fitting the GPR m
 
 Linear kernel is one of the simplest kernel functions, parameterized by a variance ($\sigma^2$) parameter. The construction of the kernel is as follows, 
 
+```math
 \begin{align} \label{eq:linear} k(x_i, x_j) = \sigma^2 + x_i \times x_j \end{align}
+```
 
 Note that the kernel is called a homogeneous linear kernel when $\sigma^2=0$.
 
 The RBF kernel is a stationary kernel. It is also known as the “squared exponential” kernel. It is parameterized by a lengthscale ($\ell$) parameter, which can either be a scalar or a vector with the same number of dimensions as the inputs, and a variance ($\sigma^2$) parameter, which controls the spread of the distribution. The kernel is given by
 
+```math
 \begin{align} \label{eq:rbf} k(x_i, x_j) = \sigma^2 \exp \left( \frac{-(x_j-x_i)^2}{2\ell^2} \right) \end{align}
+```
 
 The RBF kernel is infinitely differentiable, which implies that GPs with this kernel have mean square derivatives of all orders, and are thus smooth in shape.
 

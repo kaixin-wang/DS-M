@@ -10,10 +10,10 @@ GPR is a non-parametric Bayesian approach for inference. Instead of inferring a 
 A Gaussian process is a random process where any point $\mathbf{x}\in \mathbb{R}^d$ is assigned a random variable $f(\mathbf{x})$ and where the joint distribution of a finite number of these variables $p(f(x_1,..., f(x_N))$ follows a Gaussian distribution:
 
 ```math
-p(\mathbf{f}|\mathbf{X})\sim \mathcal{N}(\mathbf{f}|\boldsymbol \mu,\mathbf{K}) 
+p(\mathbf{f}|\mathbf{X})\sim \mathcal{N}(\mathbf{f}|\boldsymbol \mu,\mathbf{K}) (\#eq:eq1)
 ```
 
-In Equation (@eq:eq1), $\mathbf{f}=(f(x_1),...,f(x_N)), \boldsymbol \mu=(m(x_1),...,m(x_N))$ and $\mathbf{K}_{ij}=k(x_i,x_j)$. $m$ is the *mean* function; people typically use $m(\mathbf{x})=0$ as GPs are flexible enough to model the mean even if it's set to an arbitrary value at the beginning. $k$ is a positive definite function referred to as the *kernel* function or *covariance* function. Therefore, a Gaussian process is a distribution that is defined by $\mathbf{K}$, the covariance matrix. If points $x_i$ and $x_j$ are considered to be similar in the kernel space, the function values at these points, i.e., $f(x_i)$ and $f(x_j)$, will be of similar value likewise.
+In Equation \ref(@eq:eq1), $\mathbf{f}=(f(x_1),...,f(x_N)), \boldsymbol \mu=(m(x_1),...,m(x_N))$ and $\mathbf{K}_{ij}=k(x_i,x_j)$. $m$ is the *mean* function; people typically use $m(\mathbf{x})=0$ as GPs are flexible enough to model the mean even if it's set to an arbitrary value at the beginning. $k$ is a positive definite function referred to as the *kernel* function or *covariance* function. Therefore, a Gaussian process is a distribution that is defined by $\mathbf{K}$, the covariance matrix. If points $x_i$ and $x_j$ are considered to be similar in the kernel space, the function values at these points, i.e., $f(x_i)$ and $f(x_j)$, will be of similar value likewise.
 
 Suppose we are given the values of the noise-free function $\mathbf{f}$ at some inputs $\mathbf{X}$, a GP prior can be converted into a GP posterior $p(\mathbf{f}^{\*}|\mathbf{X}^{\*}, \mathbf{X}, \mathbf{f})$, which can be used to make predictions $\mathbf{f}^{\*}$ at new inputs $\mathbf{X}^{\*}$. By definition of a GP, the joint distribution of observed values $f$ and predictions $\mathbf{f}^{\*}$ is Gaussian and can be partitioned into the following: 
 

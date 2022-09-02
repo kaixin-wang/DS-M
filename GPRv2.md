@@ -57,6 +57,11 @@ knitr::include_graphics("signal.png")
 ![](/signal.png)
 Example dataset.
 
+<p>
+    <img src="/signal.png" alt>
+    <em>Example Dataset.</em>
+</p>
+
 ## Kernel Selection
 
 There is an infinite number of kernels that we can choose when fitting the GPR model. For simplicity, we will only look at the two most commonly used functions -- the linear kernel and the Radial basis function (RBF) kernel. 

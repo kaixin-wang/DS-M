@@ -54,7 +54,8 @@ To illustrate how kernels work in GPR, we will look at a simple toy dataset cura
 ```{r signal, fig.align='center', fig.cap="Example dataset. The blue line represents the true signal (i.e., $f$), the orange dots represent the observations (i.e., $f+\\epsilon$).", fig.pos="H"}
 knitr::include_graphics("signal.png")
 ```
-![Example dataset.](/signal.png)
+![](/signal.png)
+Example dataset.
 
 ## Kernel Selection
 

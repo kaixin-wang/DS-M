@@ -63,6 +63,11 @@ Example dataset.
     <em>Example Dataset.</em>
         </center/>
 </p>
+    
+<figure>
+  <img src="/signal.png" alt="my alt text"/>
+  <figcaption>This is my caption text.</figcaption>
+</figure>
 
 ## Kernel Selection
 
